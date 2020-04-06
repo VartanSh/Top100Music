@@ -1,1 +1,2 @@
 # Top100Music
+The project is about accessing to the iTunes web site and retrieving the top 100 album information as Json format. Then we are going to show a brief version of information on a tableview at first window. by taping on the table view cell it will direct to a new view controller which is going to show some more information of the album and also the second window has a button which if we tap the button it will open the album iTunes web page in a new view controller.

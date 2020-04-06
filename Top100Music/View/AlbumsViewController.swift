@@ -32,13 +32,16 @@ class AlbumsViewController: UIViewController {
         view.backgroundColor = .blue
         setupUI()
         viewModel.bind {
+            if Thread.isMainThread {
+                print("main tread")
+            }
             self.tableView.reloadData()
         }
         viewModel.fetchAlbums(){ [weak self] err in
             guard let err = err else {
                 return
             }
-            self?.alert(err: err as? errorList)
+            self?.alert(err: err as? ErrorList)
         }
     }
     
@@ -53,7 +56,7 @@ class AlbumsViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    func alert(err:errorList?) {
+    func alert(err:ErrorList?) {
         var alertString = ""
         guard let err = err else {
             return
@@ -66,8 +69,9 @@ class AlbumsViewController: UIViewController {
             alertString = "URL is not valid"
         case .NoData:
             alertString = "Data does not exist"
+        case .NoConnection:
+            alertString = "No internet connection"
         }
-
         DispatchQueue.main.async() {
             let alert = UIAlertController(title: "error", message: alertString, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
@@ -89,12 +93,12 @@ extension AlbumsViewController: UITableViewDataSource {
         cell.albumNameLabel.text = viewModel.albumName(for: indexPath.row)
         cell.artistNameLabel.text = viewModel.artistName(for: indexPath.row)
         viewModel.fetchImage(urlString: viewModel.thumbnailUrl(for: indexPath.row)) { (result)  in
-            if let data = result {
-                DispatchQueue.main.async() {
-                   cell.albumImageView.image = UIImage(data:data,scale:1.0)
+            DispatchQueue.main.async() {
+                if let data = result {
+                    cell.albumImageView.image = UIImage(data:data,scale:1.0)
+                } else {
+                    cell.albumImageView.image = UIImage(named: "No_Image")
                 }
-            } else {
-                cell.albumImageView.image = UIImage(named: "No_Image")
             }
         }
         cell.backgroundColor = .white

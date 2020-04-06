@@ -25,7 +25,7 @@ class AlbumInfoViewController: UIViewController {
         
         albumNameLabel = UILabel()
         albumNameLabel.backgroundColor = .lightText
-        albumNameLabel.numberOfLines = 2
+        albumNameLabel.numberOfLines = 3
         
         artistNameLabel = UILabel()
         artistNameLabel.backgroundColor = .lightText
@@ -41,7 +41,7 @@ class AlbumInfoViewController: UIViewController {
         
         albumCopyrightLabel = UILabel()
         albumCopyrightLabel.backgroundColor = .lightText
-        albumCopyrightLabel.numberOfLines = 1
+        albumCopyrightLabel.numberOfLines = 3
         
         vieWebPageButton = UIButton()
         vieWebPageButton.backgroundColor = .systemBlue
@@ -112,8 +112,7 @@ class AlbumInfoViewController: UIViewController {
         albumNameLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
         albumNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: horizontalSpace).isActive = true
-        albumNameLabel.bottomAnchor.constraint(equalTo: artistNameLabel.topAnchor, constant: -verticalSpace).isActive = true
-        albumNameLabel.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        albumNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: artistNameLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Artist Name
         artistNameLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
@@ -141,7 +140,6 @@ class AlbumInfoViewController: UIViewController {
         albumCopyrightLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumCopyrightLabel.topAnchor.constraint(equalTo: albumReleaseDateLabel.bottomAnchor, constant: verticalSpace).isActive = true
         albumCopyrightLabel.bottomAnchor.constraint(lessThanOrEqualTo: vieWebPageButton.topAnchor, constant: -verticalSpace).isActive = true
-        albumCopyrightLabel.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
         
         //vieWebPageButton
         vieWebPageButton.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 20).isActive = true

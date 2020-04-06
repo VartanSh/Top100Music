@@ -8,10 +8,11 @@
 
 import Foundation
 
-enum errorList: Error {
+enum ErrorList: Error {
     case BadResponse
     case NoData
     case BadURL
+    case NoConnection
 }
 
 class NetworkService {
@@ -20,20 +21,25 @@ class NetworkService {
     
     func fetchAlbums(_ completion: @escaping (Result<[Album], NSError>) -> Void) {
         guard let url = URL(string: API.iTunes.top100) else {
-            completion(.failure(errorList.BadURL as NSError))
+            completion(.failure(ErrorList.BadURL as NSError))
             return
         }
         let task = session.dataTask(with: url) { [weak self] (data, response, error) in
             if let error = error {
-                completion(.failure(error as NSError))
+                let err = error as NSError
+                if (err.code == -1009) {
+                    completion(.failure(ErrorList.NoConnection as NSError))
+                } else {
+                    completion(.failure(error as NSError))
+                }
                 return
             }
             guard let _ = response else {
-                completion(.failure(errorList.BadResponse as NSError))
+                completion(.failure(ErrorList.BadResponse as NSError))
                 return
             }
             guard let data = data else {
-                completion(.failure(errorList.NoData as NSError))
+                completion(.failure(ErrorList.NoData as NSError))
                 return
             }
             do {
@@ -49,7 +55,7 @@ class NetworkService {
     
     func fetchAlbumImage(_ urlString : String,_ completion: @escaping (Result<Data, NSError>) -> Void) {
         guard let url = URL(string: urlString) else {
-            completion(.failure(errorList.BadURL as NSError))
+            completion(.failure(ErrorList.BadURL as NSError))
             return
         }
         let task = session.dataTask(with: url) {(data, response, error) in
@@ -58,11 +64,11 @@ class NetworkService {
                 return
             }
             guard let _ = response else {
-                completion(.failure(errorList.BadResponse as NSError))
+                completion(.failure(ErrorList.BadResponse as NSError))
                 return
             }
             guard let data = data else {
-                completion(.failure(errorList.NoData as NSError))
+                completion(.failure(ErrorList.NoData as NSError))
                 return
             }
             completion(.success(data))

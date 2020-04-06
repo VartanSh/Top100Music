@@ -8,24 +8,32 @@
 
 import Foundation
 
+enum errorList: Error {
+    case BadResponse
+    case NoData
+    case BadURL
+}
+
 class NetworkService {
     let session = URLSession(configuration: .default)
     let decoder = JSONDecoder()
     
     func fetchAlbums(_ completion: @escaping (Result<[Album], NSError>) -> Void) {
         guard let url = URL(string: API.iTunes.top100) else {
-            // TODO: - some error here, or better: write this differently
+            completion(.failure(errorList.BadURL as NSError))
             return
         }
         let task = session.dataTask(with: url) { [weak self] (data, response, error) in
             if let error = error {
-                completion(.failure(error as NSError)); return
+                completion(.failure(error as NSError))
+                return
             }
-            if let response = response {
-                // do something here if it's not 200..<400
+            guard let _ = response else {
+                completion(.failure(errorList.BadResponse as NSError))
+                return
             }
             guard let data = data else {
-                // something about no data here
+                completion(.failure(errorList.NoData as NSError))
                 return
             }
             do {
@@ -41,18 +49,20 @@ class NetworkService {
     
     func fetchAlbumImage(_ urlString : String,_ completion: @escaping (Result<Data, NSError>) -> Void) {
         guard let url = URL(string: urlString) else {
-            // TODO: - some error here, or better: write this differently
+            completion(.failure(errorList.BadURL as NSError))
             return
         }
         let task = session.dataTask(with: url) {(data, response, error) in
             if let error = error {
-                completion(.failure(error as NSError)); return
+                completion(.failure(error as NSError))
+                return
             }
-            if let response = response {
-                // do something here if it's not 200..<400
+            guard let _ = response else {
+                completion(.failure(errorList.BadResponse as NSError))
+                return
             }
             guard let data = data else {
-                // something about no data here
+                completion(.failure(errorList.NoData as NSError))
                 return
             }
             completion(.success(data))

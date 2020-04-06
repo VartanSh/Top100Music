@@ -55,13 +55,15 @@ extension MusicViewModel {
         self.updateHandler = nil
     }
     
-    func fetchAlbums() {
+    func fetchAlbums(_ completion: @escaping (NSError?) -> Void)  {
         service.fetchAlbums { (result) in
             switch result {
                 case .success(let albums):
                     self.albums = albums
+                    completion(nil)
                 case .failure(let err):
                     self.albums = []
+                    completion(err)
                     print(err)
             }
         }

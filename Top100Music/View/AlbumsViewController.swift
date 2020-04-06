@@ -34,7 +34,12 @@ class AlbumsViewController: UIViewController {
         viewModel.bind {
             self.tableView.reloadData()
         }
-        viewModel.fetchAlbums()
+        viewModel.fetchAlbums(){ [weak self] err in
+            guard let err = err else {
+                return
+            }
+            self?.alert(err: err as? errorList)
+        }
     }
     
     func setupUI() {
@@ -46,6 +51,28 @@ class AlbumsViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    func alert(err:errorList?) {
+        var alertString = ""
+        guard let err = err else {
+            return
+        }
+        
+        switch err {
+        case .BadResponse:
+            alertString = "Response is not valid"
+        case .BadURL:
+            alertString = "URL is not valid"
+        case .NoData:
+            alertString = "Data does not exist"
+        }
+
+        DispatchQueue.main.async() {
+            let alert = UIAlertController(title: "error", message: alertString, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -61,7 +88,7 @@ extension AlbumsViewController: UITableViewDataSource {
         cell.albumImageView.image = nil
         cell.albumNameLabel.text = viewModel.albumName(for: indexPath.row)
         cell.artistNameLabel.text = viewModel.artistName(for: indexPath.row)
-        viewModel.fetchImage(urlString: viewModel.thumbnailUrl(for: indexPath.row)) { (result) in
+        viewModel.fetchImage(urlString: viewModel.thumbnailUrl(for: indexPath.row)) { (result)  in
             if let data = result {
                 DispatchQueue.main.async() {
                    cell.albumImageView.image = UIImage(data:data,scale:1.0)

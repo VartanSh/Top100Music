@@ -9,37 +9,36 @@
 import Foundation
 
 enum ErrorList: Error {
-    case BadResponse
-    case NoData
-    case BadURL
-    case NoConnection
+    case badResponse
+    case noData
+    case badURL
+    case noConnection
 }
 
 class NetworkService {
     let session = URLSession(configuration: .default)
     let decoder = JSONDecoder()
-    
     func fetchAlbums(_ completion: @escaping (Result<[Album], NSError>) -> Void) {
         guard let url = URL(string: API.iTunes.top100) else {
-            completion(.failure(ErrorList.BadURL as NSError))
+            completion(.failure(ErrorList.badURL as NSError))
             return
         }
         let task = session.dataTask(with: url) { [weak self] (data, response, error) in
             if let error = error {
                 let err = error as NSError
                 if (err.code == -1009) {
-                    completion(.failure(ErrorList.NoConnection as NSError))
+                    completion(.failure(ErrorList.noConnection as NSError))
                 } else {
                     completion(.failure(error as NSError))
                 }
                 return
             }
             guard let _ = response else {
-                completion(.failure(ErrorList.BadResponse as NSError))
+                completion(.failure(ErrorList.badResponse as NSError))
                 return
             }
             guard let data = data else {
-                completion(.failure(ErrorList.NoData as NSError))
+                completion(.failure(ErrorList.noData as NSError))
                 return
             }
             do {
@@ -55,25 +54,25 @@ class NetworkService {
     
     func fetchAlbumImage(_ urlString : String,_ completion: @escaping (Result<Data, NSError>) -> Void) {
         guard let url = URL(string: urlString) else {
-            completion(.failure(ErrorList.BadURL as NSError))
+            completion(.failure(ErrorList.badURL as NSError))
             return
         }
         let task = session.dataTask(with: url) {(data, response, error) in
             if let error = error {
                 let err = error as NSError
                 if (err.code == -1009) {
-                    completion(.failure(ErrorList.NoConnection as NSError))
+                    completion(.failure(ErrorList.noConnection as NSError))
                 } else {
                     completion(.failure(error as NSError))
                 }
                 return
             }
             guard let _ = response else {
-                completion(.failure(ErrorList.BadResponse as NSError))
+                completion(.failure(ErrorList.badResponse as NSError))
                 return
             }
             guard let data = data else {
-                completion(.failure(ErrorList.NoData as NSError))
+                completion(.failure(ErrorList.noData as NSError))
                 return
             }
             completion(.success(data))

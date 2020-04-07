@@ -15,39 +15,39 @@ class AlbumsTableViewCell: UITableViewCell {
     let artistNameLabel: UILabel
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        albumImageView = UIImageView()
-        albumImageView.contentMode = .scaleToFill;
-        albumNameLabel = UILabel(frame: .zero)
-        albumNameLabel.numberOfLines = 2
-        artistNameLabel = UILabel(frame: .zero)
-        artistNameLabel.numberOfLines = 1
+        self.albumImageView = UIImageView()
+        self.albumImageView.contentMode = .scaleToFill;
+        self.albumNameLabel = UILabel(frame: .zero)
+        self.albumNameLabel.numberOfLines = 2
+        self.artistNameLabel = UILabel(frame: .zero)
+        self.artistNameLabel.numberOfLines = 1
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        albumImageView.translatesAutoresizingMaskIntoConstraints = false
-        albumNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.albumImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.albumNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
         let layoutGuide = self.contentView.safeAreaLayoutGuide
        
-        self.contentView.addSubview(albumImageView)
-        self.contentView.addSubview(albumNameLabel)
-        self.contentView.addSubview(artistNameLabel)
+        self.contentView.addSubview(self.albumImageView)
+        self.contentView.addSubview(self.albumNameLabel)
+        self.contentView.addSubview(self.artistNameLabel)
         
         //albumImageView constraint
-        albumImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 10.0).isActive = true
-        albumImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 10.0).isActive = true
-        albumImageView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
-        albumImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
+        self.albumImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 10.0).isActive = true
+        self.albumImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: 10.0).isActive = true
+        self.albumImageView.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
+        self.albumImageView.widthAnchor.constraint(equalToConstant: 80.0).isActive = true
         
         //albumNameLabel constraint
-        albumNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0).isActive = true
-        albumNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
-        albumNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10.0).isActive = true
-        albumNameLabel.bottomAnchor.constraint(equalTo: artistNameLabel.topAnchor, constant: -10.0).isActive = true
+        self.albumNameLabel.leadingAnchor.constraint(equalTo: self.albumImageView.trailingAnchor, constant: 10.0).isActive = true
+        self.albumNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
+        self.albumNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10.0).isActive = true
+        self.albumNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.artistNameLabel.topAnchor).isActive = true
         //artistNameLabel constraint
-        artistNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0).isActive = true
-        artistNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
-        artistNameLabel.topAnchor.constraint(equalTo: albumNameLabel.bottomAnchor, constant: 10.0).isActive = true
-        artistNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0).isActive = true
+        self.artistNameLabel.leadingAnchor.constraint(equalTo: self.albumImageView.trailingAnchor, constant: 10.0).isActive = true
+        self.artistNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor).isActive = true
+        self.artistNameLabel.topAnchor.constraint(greaterThanOrEqualTo: self.albumNameLabel.bottomAnchor, constant: 5.0).isActive = true
+        self.artistNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0).isActive = true
     }
     
     required init?(coder: NSCoder) {

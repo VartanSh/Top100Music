@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct AlbumFeed: Decodable {
     let feed: FeedInfo

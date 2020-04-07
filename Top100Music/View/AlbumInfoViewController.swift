@@ -9,46 +9,47 @@
 import UIKit
 
 class AlbumInfoViewController: UIViewController {
-    var albumImageView: UIImageView
-    var albumNameLabel: UILabel
-    var artistNameLabel: UILabel
-    var albumGenerLabel: UILabel
-    var albumReleaseDateLabel: UILabel
-    var albumCopyrightLabel: UILabel
-    var viewWebPageButton: UIButton
-    var albumInfo : AlbumInfoViewModle
+    ///UI elements
+    private var albumImageView: UIImageView
+    private var albumNameLabel: UILabel
+    private var artistNameLabel: UILabel
+    private var albumGenerLabel: UILabel
+    private var albumReleaseDateLabel: UILabel
+    private var albumCopyrightLabel: UILabel
+    private var viewWebPageButton: UIButton
+    ///variable which holds the album information
+    private var albumInfo : AlbumInfoViewModle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
-        albumImageView = UIImageView()
-        albumImageView.backgroundColor = .black
-        albumImageView.contentMode = .scaleToFill;
+        self.albumImageView = UIImageView()
+        self.albumImageView.backgroundColor = .black
+        self.albumImageView.contentMode = .scaleToFill;
         
-        albumNameLabel = UILabel()
-        albumNameLabel.backgroundColor = .lightText
-        albumNameLabel.numberOfLines = 3
+        self.albumNameLabel = UILabel()
+        self.albumNameLabel.backgroundColor = .lightText
+        self.albumNameLabel.numberOfLines = 3
         
-        artistNameLabel = UILabel()
-        artistNameLabel.backgroundColor = .lightText
-        artistNameLabel.numberOfLines = 1
+        self.artistNameLabel = UILabel()
+        self.artistNameLabel.backgroundColor = .lightText
+        self.artistNameLabel.numberOfLines = 1
         
-        albumGenerLabel = UILabel()
-        albumGenerLabel.backgroundColor = .lightText
-        albumGenerLabel.numberOfLines = 1
+        self.albumGenerLabel = UILabel()
+        self.albumGenerLabel.backgroundColor = .lightText
+        self.albumGenerLabel.numberOfLines = 2
         
-        albumReleaseDateLabel = UILabel()
-        albumReleaseDateLabel.backgroundColor = .lightText
-        albumReleaseDateLabel.numberOfLines = 1
+        self.albumReleaseDateLabel = UILabel()
+        self.albumReleaseDateLabel.backgroundColor = .lightText
+        self.albumReleaseDateLabel.numberOfLines = 1
         
-        albumCopyrightLabel = UILabel()
-        albumCopyrightLabel.backgroundColor = .lightText
-        albumCopyrightLabel.numberOfLines = 3
+        self.albumCopyrightLabel = UILabel()
+        self.albumCopyrightLabel.backgroundColor = .lightText
+        self.albumCopyrightLabel.numberOfLines = 3
         
-        viewWebPageButton = UIButton()
-        viewWebPageButton.backgroundColor = .systemBlue
-        viewWebPageButton.setTitle("Album iTunes Web Page", for: .normal)
+        self.viewWebPageButton = UIButton()
+        self.viewWebPageButton.backgroundColor = .systemBlue
+        self.viewWebPageButton.setTitle("Album iTunes Web Page", for: .normal)
         
-        albumInfo = AlbumInfoViewModle()
-        //scrollView = UIScrollView()
+        self.albumInfo = AlbumInfoViewModle()
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -65,21 +66,21 @@ class AlbumInfoViewController: UIViewController {
         super.viewWillAppear(animated)
         initUI()
     }
-    
+    ///set the albumInfo variable value
     func setAlbumInfo(albumInfo:AlbumInfoViewModle){
         self.albumInfo = albumInfo
     }
-    
-    func initUI() {
-        albumImageView.image = albumInfo.albumImage
-        albumNameLabel.text = albumInfo.name
-        artistNameLabel.text = albumInfo.artistName
-        albumGenerLabel.text = albumInfo.genres
-        albumReleaseDateLabel.text = albumInfo.releaseDate
-        albumCopyrightLabel.text = albumInfo.copyright
+    ///set the UI element/s with data
+    private func initUI() {
+        self.albumImageView.image = self.albumInfo.albumImage
+        self.albumNameLabel.text = self.albumInfo.name
+        self.artistNameLabel.text = self.albumInfo.artistName
+        self.albumGenerLabel.text = self.albumInfo.genres
+        self.albumReleaseDateLabel.text = self.albumInfo.releaseDate
+        self.albumCopyrightLabel.text = self.albumInfo.copyright
     }
-    
-    func setupUI() {
+    ///setup the UI layou constraints, navigation title, add sub view/s
+    private func setupUI() {
         self.view.backgroundColor = .white
         self.navigationItem.title = "Album Information"
         self.albumImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,12 +91,12 @@ class AlbumInfoViewController: UIViewController {
         self.albumCopyrightLabel.translatesAutoresizingMaskIntoConstraints = false
         self.viewWebPageButton.translatesAutoresizingMaskIntoConstraints = false
         
-        self.view.addSubview(albumImageView)
-        self.view.addSubview(albumNameLabel)
-        self.view.addSubview(artistNameLabel)
-        self.view.addSubview(albumGenerLabel)
-        self.view.addSubview(albumReleaseDateLabel)
-        self.view.addSubview(albumCopyrightLabel)
+        self.view.addSubview(self.albumImageView)
+        self.view.addSubview(self.albumNameLabel)
+        self.view.addSubview(self.artistNameLabel)
+        self.view.addSubview(self.albumGenerLabel)
+        self.view.addSubview(self.albumReleaseDateLabel)
+        self.view.addSubview(self.albumCopyrightLabel)
 
         self.view.addSubview(viewWebPageButton)
         let horizontalSpace = CGFloat(10.0)
@@ -105,48 +106,48 @@ class AlbumInfoViewController: UIViewController {
         let viewLayoutGuide = self.view.safeAreaLayoutGuide
         
         //Image
-        albumImageView.centerXAnchor.constraint(equalTo: viewLayoutGuide.centerXAnchor).isActive = true
-        albumImageView.topAnchor.constraint(equalTo: viewLayoutGuide.topAnchor, constant: horizontalSpace).isActive = true
-        albumImageView.heightAnchor.constraint(equalToConstant: 250.0).isActive = true
-        albumImageView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
+        self.albumImageView.centerXAnchor.constraint(equalTo: viewLayoutGuide.centerXAnchor).isActive = true
+        self.albumImageView.topAnchor.constraint(equalTo: viewLayoutGuide.topAnchor, constant: horizontalSpace).isActive = true
+        self.albumImageView.heightAnchor.constraint(equalToConstant: 250.0).isActive = true
+        self.albumImageView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
 
         //Album Name
-        albumNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
-        albumNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: horizontalSpace).isActive = true
-        albumNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: artistNameLabel.topAnchor, constant: -verticalSpace).isActive = true
+        self.albumNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        self.albumNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        self.albumNameLabel.topAnchor.constraint(equalTo: self.albumImageView.bottomAnchor, constant: horizontalSpace).isActive = true
+        self.albumNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.artistNameLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Artist Name
-        artistNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        artistNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
-        artistNameLabel.topAnchor.constraint(equalTo: albumNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
-        artistNameLabel.bottomAnchor.constraint(equalTo: albumGenerLabel.topAnchor, constant: -verticalSpace).isActive = true
+        self.artistNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        self.artistNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        self.artistNameLabel.topAnchor.constraint(equalTo: self.albumNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
+        self.artistNameLabel.bottomAnchor.constraint(equalTo: self.albumGenerLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Album Gener
-        albumGenerLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumGenerLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
-        albumGenerLabel.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
-        albumGenerLabel.bottomAnchor.constraint(equalTo: albumReleaseDateLabel.topAnchor, constant: -verticalSpace).isActive = true
+        self.albumGenerLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        self.albumGenerLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        self.albumGenerLabel.topAnchor.constraint(equalTo: self.artistNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
+        self.albumGenerLabel.bottomAnchor.constraint(equalTo: self.albumReleaseDateLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Release Date
-        albumReleaseDateLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumReleaseDateLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
-        albumReleaseDateLabel.topAnchor.constraint(equalTo: albumGenerLabel.bottomAnchor, constant: verticalSpace).isActive = true
-        albumReleaseDateLabel.bottomAnchor.constraint(equalTo: albumCopyrightLabel.topAnchor, constant: -verticalSpace).isActive = true
+        self.albumReleaseDateLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        self.albumReleaseDateLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        self.albumReleaseDateLabel.topAnchor.constraint(equalTo: self.albumGenerLabel.bottomAnchor, constant: verticalSpace).isActive = true
+        self.albumReleaseDateLabel.bottomAnchor.constraint(equalTo: self.albumCopyrightLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Album Copyright
-        albumCopyrightLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumCopyrightLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
-        albumCopyrightLabel.topAnchor.constraint(equalTo: albumReleaseDateLabel.bottomAnchor, constant: verticalSpace).isActive = true
-        albumCopyrightLabel.bottomAnchor.constraint(lessThanOrEqualTo: viewWebPageButton.topAnchor, constant: -verticalSpace).isActive = true
+        self.albumCopyrightLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        self.albumCopyrightLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        self.albumCopyrightLabel.topAnchor.constraint(equalTo: albumReleaseDateLabel.bottomAnchor, constant: verticalSpace).isActive = true
+        self.albumCopyrightLabel.bottomAnchor.constraint(lessThanOrEqualTo: viewWebPageButton.topAnchor, constant: -verticalSpace).isActive = true
         
         //vieWebPageButton
-        viewWebPageButton.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        viewWebPageButton.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        viewWebPageButton.topAnchor.constraint(greaterThanOrEqualTo: albumCopyrightLabel.bottomAnchor).isActive = true
-        viewWebPageButton.bottomAnchor.constraint(equalTo: viewLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        viewWebPageButton.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
-        viewWebPageButton.addTarget(self, action: #selector(loadWebViewControler), for: .touchUpInside)
+        self.viewWebPageButton.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        self.viewWebPageButton.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        self.viewWebPageButton.topAnchor.constraint(greaterThanOrEqualTo: self.albumCopyrightLabel.bottomAnchor).isActive = true
+        self.viewWebPageButton.bottomAnchor.constraint(equalTo: viewLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        self.viewWebPageButton.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
+        self.viewWebPageButton.addTarget(self, action: #selector(loadWebViewControler), for: .touchUpInside)
     }
     
     @IBAction func loadWebViewControler(){

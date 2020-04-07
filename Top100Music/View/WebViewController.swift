@@ -10,12 +10,13 @@ import UIKit
 import WebKit
 
 class WebViewController: UIViewController{
-    lazy var webView: WKWebView = {
+    private lazy var webView: WKWebView = {
         let webView = WKWebView(frame: .zero)
         return webView
     }()
     
-    var urlString : String
+    ///variable which holds the album web page url string value
+    private var urlString : String
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
         urlString = ""
@@ -28,11 +29,11 @@ class WebViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        loadWebPage()
+        self.setupUI()
+        self.loadWebPage()
     }
-    
-    func loadWebPage() {
+    ///request desktop version of the album iTunes web page and load.
+    private func loadWebPage() {
         guard let url = URL(string:self.urlString ) else { return }
         let requestURL = URLRequest(url: url)
         self.webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.109 Safari/537.36"
@@ -40,17 +41,17 @@ class WebViewController: UIViewController{
             self.webView.load(requestURL)
         }
     }
-    
-    func setupUI() {
+    ///setup the UI layou constraints, navigation title, add sub view/s
+    private func setupUI() {
         self.navigationItem.title = "Album's Web Page "
         self.view.addSubview(webView)
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        self.webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        self.webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        self.webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        self.webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-    
+    //set the url string value
     func setURL(urlString:String){
         self.urlString = urlString
     }

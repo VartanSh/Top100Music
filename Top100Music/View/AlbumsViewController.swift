@@ -14,8 +14,8 @@ class AlbumsViewController: UIViewController {
     }
     
     private let queue: DispatchQueue = .main
-
-    lazy var tableView: UITableView = {
+    
+    private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero,
                                     style: .plain)
         tableView.delegate = self
@@ -24,51 +24,50 @@ class AlbumsViewController: UIViewController {
                            forCellReuseIdentifier: Constants.cellReuseId)
         return tableView
     }()
-    
-    let viewModel = MusicViewModel()
+    ///variable which holds the albums info value
+    private let viewModel = MusicViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
-        setupUI()
-        viewModel.bind {
+        self.view.backgroundColor = .blue
+        self.setupUI()
+        self.viewModel.bind {
             DispatchQueue.main.async() {
                 self.tableView.reloadData()
             }
         }
-        viewModel.fetchAlbums(){ [weak self] err in
+        self.viewModel.fetchAlbums(){ [weak self] err in
             guard let err = err else {
                 return
             }
             self?.alert(err: err as? ErrorList)
         }
     }
-    
-    func setupUI() {
+    ///setup the UI layou constraints, navigation title, add sub view/s
+    private func setupUI() {
         self.navigationItem.title = "Top 100 iTunes Albums"
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(tableView)
         
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        self.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        self.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        self.tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
-    func alert(err:ErrorList?) {
+    ///shows the error message based on the error code
+    private func alert(err:ErrorList?) {
         var alertString = ""
         guard let err = err else {
             return
         }
-        
         switch err {
-        case .BadResponse:
+        case .badResponse:
             alertString = "Response is not valid"
-        case .BadURL:
+        case .badURL:
             alertString = "URL is not valid"
-        case .NoData:
+        case .noData:
             alertString = "Data does not exist"
-        case .NoConnection:
+        case .noConnection:
             alertString = "No internet connection"
         }
         DispatchQueue.main.async() {

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+/// data structure for album info. view controler
 struct AlbumInfoViewModle {
     let name: String
     let artistName: String
@@ -32,6 +32,7 @@ struct AlbumInfoViewModle {
         name = album.name
         artistName = album.artistName
         albumImage = image
+        //converting the geners aray to a string value
         genres = album.genres.map({$0.name}).joined(separator: ", ")
         releaseDate = album.releaseDate
         copyright = album.copyright

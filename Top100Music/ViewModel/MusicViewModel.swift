@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 class MusicViewModel {
     private var albums: [Album] = [] {
@@ -54,7 +53,7 @@ extension MusicViewModel {
     func unbind() {
         self.updateHandler = nil
     }
-    
+    ///request albums infromation from remot data source
     func fetchAlbums(_ completion: @escaping (NSError?) -> Void)  {
         service.fetchAlbums { (result) in
             switch result {
@@ -68,7 +67,7 @@ extension MusicViewModel {
             }
         }
     }
-    
+    ///request albums image data from remote data source
     func fetchImage(urlString: String, _ completion: @escaping (Data?) -> Void) {
         service.fetchAlbumImage(urlString) { (result) in
             switch result {

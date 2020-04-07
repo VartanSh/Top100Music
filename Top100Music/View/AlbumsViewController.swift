@@ -32,7 +32,9 @@ class AlbumsViewController: UIViewController {
         view.backgroundColor = .blue
         setupUI()
         viewModel.bind {
-            self.tableView.reloadData()
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+            }
         }
         viewModel.fetchAlbums(){ [weak self] err in
             guard let err = err else {

@@ -32,9 +32,6 @@ class AlbumsViewController: UIViewController {
         view.backgroundColor = .blue
         setupUI()
         viewModel.bind {
-            if Thread.isMainThread {
-                print("main tread")
-            }
             self.tableView.reloadData()
         }
         viewModel.fetchAlbums(){ [weak self] err in

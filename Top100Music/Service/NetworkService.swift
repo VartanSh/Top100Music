@@ -60,7 +60,12 @@ class NetworkService {
         }
         let task = session.dataTask(with: url) {(data, response, error) in
             if let error = error {
-                completion(.failure(error as NSError))
+                let err = error as NSError
+                if (err.code == -1009) {
+                    completion(.failure(ErrorList.NoConnection as NSError))
+                } else {
+                    completion(.failure(error as NSError))
+                }
                 return
             }
             guard let _ = response else {

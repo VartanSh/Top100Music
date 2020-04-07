@@ -15,7 +15,7 @@ class AlbumInfoViewController: UIViewController {
     var albumGenerLabel: UILabel
     var albumReleaseDateLabel: UILabel
     var albumCopyrightLabel: UILabel
-    var vieWebPageButton: UIButton
+    var viewWebPageButton: UIButton
     var albumInfo : AlbumInfoViewModle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
@@ -43,11 +43,13 @@ class AlbumInfoViewController: UIViewController {
         albumCopyrightLabel.backgroundColor = .lightText
         albumCopyrightLabel.numberOfLines = 3
         
-        vieWebPageButton = UIButton()
-        vieWebPageButton.backgroundColor = .systemBlue
-        vieWebPageButton.setTitle("Album iTunes Web Page", for: .normal)
+        viewWebPageButton = UIButton()
+        viewWebPageButton.backgroundColor = .systemBlue
+        viewWebPageButton.setTitle("Album iTunes Web Page", for: .normal)
         
         albumInfo = AlbumInfoViewModle()
+        //scrollView = UIScrollView()
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -80,15 +82,13 @@ class AlbumInfoViewController: UIViewController {
     func setupUI() {
         self.view.backgroundColor = .white
         self.navigationItem.title = "Album Information"
-        albumImageView.translatesAutoresizingMaskIntoConstraints = false
-        albumNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        albumGenerLabel.translatesAutoresizingMaskIntoConstraints = false
-        albumReleaseDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        albumCopyrightLabel.translatesAutoresizingMaskIntoConstraints = false
-        vieWebPageButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        let layoutGuide = view.safeAreaLayoutGuide
+        self.albumImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.albumNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.albumGenerLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.albumReleaseDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.albumCopyrightLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.viewWebPageButton.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(albumImageView)
         self.view.addSubview(albumNameLabel)
@@ -96,58 +96,57 @@ class AlbumInfoViewController: UIViewController {
         self.view.addSubview(albumGenerLabel)
         self.view.addSubview(albumReleaseDateLabel)
         self.view.addSubview(albumCopyrightLabel)
-        self.view.addSubview(vieWebPageButton)
-        
+
+        self.view.addSubview(viewWebPageButton)
         let horizontalSpace = CGFloat(10.0)
         let verticalSpace = CGFloat(10.0)
         let lableHeight = CGFloat(30.0)
 
+        let viewLayoutGuide = self.view.safeAreaLayoutGuide
+        
         //Image
-        albumImageView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor).isActive = true
-        albumImageView.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: horizontalSpace).isActive = true
+        albumImageView.centerXAnchor.constraint(equalTo: viewLayoutGuide.centerXAnchor).isActive = true
+        albumImageView.topAnchor.constraint(equalTo: viewLayoutGuide.topAnchor, constant: horizontalSpace).isActive = true
         albumImageView.heightAnchor.constraint(equalToConstant: 250.0).isActive = true
         albumImageView.widthAnchor.constraint(equalToConstant: 250.0).isActive = true
 
         //Album Name
-        albumNameLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        albumNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        albumNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumNameLabel.topAnchor.constraint(equalTo: albumImageView.bottomAnchor, constant: horizontalSpace).isActive = true
         albumNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: artistNameLabel.topAnchor, constant: -verticalSpace).isActive = true
 
         //Artist Name
-        artistNameLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        artistNameLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        artistNameLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        artistNameLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         artistNameLabel.topAnchor.constraint(equalTo: albumNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
         artistNameLabel.bottomAnchor.constraint(equalTo: albumGenerLabel.topAnchor, constant: -verticalSpace).isActive = true
-        artistNameLabel.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
 
         //Album Gener
-        albumGenerLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumGenerLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        albumGenerLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        albumGenerLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumGenerLabel.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: verticalSpace).isActive = true
         albumGenerLabel.bottomAnchor.constraint(equalTo: albumReleaseDateLabel.topAnchor, constant: -verticalSpace).isActive = true
-        albumGenerLabel.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
 
         //Release Date
-        albumReleaseDateLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumReleaseDateLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        albumReleaseDateLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        albumReleaseDateLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumReleaseDateLabel.topAnchor.constraint(equalTo: albumGenerLabel.bottomAnchor, constant: verticalSpace).isActive = true
         albumReleaseDateLabel.bottomAnchor.constraint(equalTo: albumCopyrightLabel.topAnchor, constant: -verticalSpace).isActive = true
-        albumReleaseDateLabel.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
 
         //Album Copyright
-        albumCopyrightLabel.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
-        albumCopyrightLabel.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
+        albumCopyrightLabel.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: horizontalSpace).isActive = true
+        albumCopyrightLabel.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -horizontalSpace).isActive = true
         albumCopyrightLabel.topAnchor.constraint(equalTo: albumReleaseDateLabel.bottomAnchor, constant: verticalSpace).isActive = true
-        albumCopyrightLabel.bottomAnchor.constraint(lessThanOrEqualTo: vieWebPageButton.topAnchor, constant: -verticalSpace).isActive = true
+        albumCopyrightLabel.bottomAnchor.constraint(lessThanOrEqualTo: viewWebPageButton.topAnchor, constant: -verticalSpace).isActive = true
         
         //vieWebPageButton
-        vieWebPageButton.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: 20).isActive = true
-        vieWebPageButton.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -20).isActive = true
-        vieWebPageButton.topAnchor.constraint(greaterThanOrEqualTo: albumCopyrightLabel.bottomAnchor).isActive = true
-        vieWebPageButton.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: -20).isActive = true
-        vieWebPageButton.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
-        vieWebPageButton.addTarget(self, action: #selector(loadWebViewControler), for: .touchUpInside)
+        viewWebPageButton.leadingAnchor.constraint(equalTo: viewLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        viewWebPageButton.trailingAnchor.constraint(equalTo: viewLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        viewWebPageButton.topAnchor.constraint(greaterThanOrEqualTo: albumCopyrightLabel.bottomAnchor).isActive = true
+        viewWebPageButton.bottomAnchor.constraint(equalTo: viewLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        viewWebPageButton.heightAnchor.constraint(equalToConstant: lableHeight).isActive = true
+        viewWebPageButton.addTarget(self, action: #selector(loadWebViewControler), for: .touchUpInside)
     }
     
     @IBAction func loadWebViewControler(){
@@ -156,5 +155,4 @@ class AlbumInfoViewController: UIViewController {
         navigationController?.pushViewController(webVC, animated: true)
     }
 }
-
 
